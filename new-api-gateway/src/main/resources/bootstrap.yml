@@ -1,0 +1,25 @@
+#端口
+server:
+  port: 9200
+
+#服务名称
+spring:
+  application:
+      name: new-api-gateway
+  main:
+    allow-bean-definition-overriding: true    
+ 
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    chaosmonkey:
+      enabled: true
+    health:
+      show-details: always  
+ 
+
+ 

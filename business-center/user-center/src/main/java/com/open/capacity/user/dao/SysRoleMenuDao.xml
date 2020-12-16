@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.capacity.user.dao.SysRoleMenuDao">
+
+
+	<!-- MySQL下批量保存，可以foreach遍历 mysql支持values(),(),()语法 --> 
+	<insert id="saveBatch">
+      INSERT INTO sys_role_menu(role_id, menu_id)
+      VALUES
+      <foreach collection="menuIds" item="menuId" separator=",">
+      (#{roleId},#{menuId})
+      </foreach>
+     </insert>
+
+	<update id="deleteBySelective">
+		delete from sys_role_menu
+		<where>
+			<if test="roleId != null">
+				and role_id = #{roleId}
+			</if>
+			<if test="menuId != null">
+				and menu_id = #{menuId}
+			</if>
+		</where>
+	</update>
+
+	<select id="findMenusByRoleIds" resultType="com.open.capacity.common.model.SysMenu">
+		select distinct t.id ,t.parent_id parentId , t.name, t.url, t.path, t.css, t.sort, t.create_time createTime , t.update_time updateTime ,t.is_menu isMenu,t.hidden from sys_menu t
+		inner join sys_role_menu r on r.menu_id = t.id
+		where
+		r.role_id in
+		<foreach collection="roleIds" index="index" item="roleId"
+			open="(" separator="," close=")">
+			#{roleId}
+		</foreach>
+		ORDER BY sort ASC
+	</select>
+</mapper>

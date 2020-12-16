@@ -1,0 +1,37 @@
+#------------------------------------------------------------------------
+#                           单库多列分片                                  #
+#------------------------------------------------------------------------
+sharding:
+  jdbc:
+    config:
+      sharding:
+        binding-tables: t_order,t_user_info
+        default-data-source-name: ds-0  
+        props:
+          sql:
+            show: true
+        tables:
+          t_user_info: 
+            actual-data-nodes: ds-0.t_user_info_$->{0..4}
+            key-generator-column-name: user_id
+            table-strategy:
+              inline:
+                sharding-column: user_id
+                algorithm-expression: t_user_info_$->{user_id % 5}
+          t_order: 
+            key-generator-column-name: order_id  
+            table-strategy:
+              complex:
+                sharding-columns: create_time,order_id
+                algorithm-class-name: com.sharding.demo.config.OrderComplexShardingStrategy
+    datasource:
+      names: ds-0
+      ds-0: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://59.110.164.254:3306/ops_0?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: root
+        maximumPoolSize: 50
+        connectionTestQuery: select 1
+ 

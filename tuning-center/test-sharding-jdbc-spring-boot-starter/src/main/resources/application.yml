@@ -1,0 +1,36 @@
+spring:
+  profiles:
+    active: standalone-muti
+  application:
+    name: test-sharding-jdbc-spring-boot-starter
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: 6755
+
+mybatis-plus:
+  check-config-location: true
+  type-aliases-package: com.sharding.demo.model
+  global-config:
+    banner: false
+  configuration:
+    default-fetch-size: 100
+    use-generated-keys: true
+    map-underscore-to-camel-case: true
+    default-statement-timeout: 30
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:com/sharding/**/dao/*.xml  
+ 
+
+#logging
+logging:
+  level:
+    root: INFO
+    com.netflix: OFF
+    com.open.capacity: INFO  
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+ 
+ 

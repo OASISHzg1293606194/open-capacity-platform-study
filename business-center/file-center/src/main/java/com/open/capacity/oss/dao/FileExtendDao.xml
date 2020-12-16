@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.capacity.oss.dao.FileExtendDao">
+
+
+    <update id="batchUpdateSelective"  parameterType="java.util.List">
+        <foreach close="" collection="list" index="index" item="item" open="" separator=";">
+            update file_info_extend
+            <set>
+                <if test="item.guid != null">
+                    guid = #{item.guid,jdbcType=VARCHAR},
+                </if>
+                <if test="item.name != null">
+                    name = #{item.name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.size != null">
+                    size = #{item.size,jdbcType=INTEGER},
+                </if>
+                <if test="item.path != null">
+                    path = #{item.path,jdbcType=VARCHAR},
+                </if>
+                <if test="item.url != null">
+                    url = #{item.url,jdbcType=VARCHAR},
+                </if>
+                <if test="item.source != null">
+                    source = #{item.source,jdbcType=VARCHAR},
+                </if>
+                <if test="item.fileId != null">
+                    file_id = #{item.fileId,jdbcType=VARCHAR},
+                </if>
+            </set>
+            where id = #{item.id,jdbcType=CHAR}
+        </foreach>
+    </update>
+
+
+</mapper>

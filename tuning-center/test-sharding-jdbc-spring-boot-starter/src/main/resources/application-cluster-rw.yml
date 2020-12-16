@@ -1,0 +1,104 @@
+#------------------------------------------------------------------------
+#                        多库分片 + 读写                                  #
+#------------------------------------------------------------------------
+ 
+sharding:
+  jdbc:
+    config:
+      sharding:
+        broadcast-tables: t_company
+        binding-tables: t_order,t_user_info
+        default-data-source-name: ds-0  
+        props:
+          sql:
+            show: true
+        tables:
+          t_order: 
+            ##分库策略
+            database-strategy:
+              standard:
+                ##分片键
+                sharding-column: company_id
+                precise-algorithm-class-name: com.sharding.demo.config.CompanyPreciseDBShardingAlgorithm
+            ##分表策略
+            key-generator-column-name: order_id  
+            table-strategy:
+              complex:
+                sharding-columns: create_time,order_id
+                algorithm-class-name: com.sharding.demo.config.OrderComplexShardingStrategy
+          t_user_info: 
+            key-generator-column-name: user_id
+            ##分库策略
+            database-strategy:
+              standard:
+                ##分片键
+                sharding-column: company_id
+                precise-algorithm-class-name: com.sharding.demo.config.CompanyPreciseDBShardingAlgorithm
+             ##分表策略
+            table-strategy:
+              inline: 
+                ##分片键
+                sharding-column: user_id
+                algorithm-expression: t_user_info_$->{user_id % 5}
+        master-slave-rules:
+          ds-0:
+            master-data-source-name: ds-master-0          
+            slave-data-source-names: ds-master-0-slave-0
+          ds-1:
+            master-data-source-name: ds-master-1          
+            slave-data-source-names: ds-master-1-slave-0  
+          ds-2:
+            master-data-source-name: ds-master-2          
+            slave-data-source-names: ds-master-2-slave-0  
+    datasource:
+      names: ds-master-0,ds-master-0-slave-0,ds-master-1,ds-master-1-slave-0,ds-master-2,ds-master-2-slave-0
+      ds-master-0: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://59.110.164.254:3306/ops_0?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: root
+        maximumPoolSize: 50
+        connectionTestQuery: select 1
+      ds-master-0-slave-0: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://59.110.164.254:3306/ops_0?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: root
+        maximumPoolSize: 50
+        connectionTestQuery: select 1  
+      ds-master-1: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://59.110.164.254:3306/ops_1?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: root
+        maximumPoolSize: 50
+        connectionTestQuery: select 1
+      ds-master-1-slave-0: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://59.110.164.254:3306/ops_1?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: root
+        maximumPoolSize: 50
+        connectionTestQuery: select 1  
+      ds-master-2: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://59.110.164.254:3306/ops_2?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: root
+        maximumPoolSize: 50
+        connectionTestQuery: select 1
+      ds-master-2-slave-0: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://59.110.164.254:3306/ops_2?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: root
+        maximumPoolSize: 50
+        connectionTestQuery: select 1
+ 
+

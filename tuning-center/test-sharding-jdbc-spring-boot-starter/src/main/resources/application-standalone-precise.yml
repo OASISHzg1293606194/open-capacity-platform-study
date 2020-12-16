@@ -1,0 +1,43 @@
+#------------------------------------------------------------------------
+#                           单库自定义precise分片                          #
+#------------------------------------------------------------------------
+
+
+sharding:
+  jdbc:
+    config:
+      sharding:
+        binding-tables: t_user_info,t_order
+        default-data-source-name: ds-0  
+        props:
+          sql:
+            show: true
+        tables:
+          t_order: 
+            key-generator-column-name: order_id 
+            #分表策略
+            table-strategy: 
+            table-strategy:
+              complex:
+                sharding-columns: create_time,order_id
+                algorithm-class-name: com.sharding.demo.config.OrderComplexShardingStrategy
+          t_user_info: 
+            actual-data-nodes: ds-0.t_user_info_$->{0..4}
+            key-generator-column-name: user_id
+            #分表策略
+            table-strategy:
+              standard:
+                ##分片键
+                sharding-column: user_id
+                precise-algorithm-class-name: com.sharding.demo.config.UserPreciseShardingAlgorithm
+    datasource:
+      names: ds-0
+      ds-0: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://59.110.164.254:3306/demo_0?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: root
+        maximumPoolSize: 50
+        connectionTestQuery: select 1
+ 
