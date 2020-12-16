@@ -1,9 +1,10 @@
 spring:
   datasource:
-    druid: 
-      url: jdbc:mysql://59.110.164.254:3306/oauth-center?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false 
+    druid:
+      url: jdbc:mysql://127.0.0.1:3308/oauth-center?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
       username: root
       password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
       initial-size: 1
       max-active: 20
       min-idle: 1
@@ -65,7 +66,7 @@ spring:
 #    base-url: http://127.0.0.1:11008
   redis:
 ################### redis 单机版 start ########################## 
-    host: 59.110.164.254
+    host: 127.0.0.1
     port: 6379
     timeout: 6000
     database: 1

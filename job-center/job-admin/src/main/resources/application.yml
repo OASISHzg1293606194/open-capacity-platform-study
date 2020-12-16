@@ -6,7 +6,7 @@ spring:
   datasource:
     druid: 
       # JDBC 配置(驱动类自动从url的mysql识别,数据源类型自动识别)
-      url: jdbc:mysql://59.110.164.254:3306/job-center?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3308/job-center?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
       username: root
       password: root
       driver-class-name:  com.mysql.cj.jdbc.Driver

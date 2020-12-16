@@ -3,10 +3,10 @@ spring:
     store-type: redis  
   datasource:
     druid:
-      url: jdbc:mysql://59.110.164.254:3306/oauth-center?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false 
+      url: jdbc:mysql://127.0.0.1:3308/oauth-center?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
       username: root
       password: root
-      driver-class-name:  com.mysql.cj.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       #连接池配置(通常来说，只需要修改initialSize、minIdle、maxActive
       initial-size: 1
       max-active: 20
@@ -64,7 +64,7 @@ spring:
 ################### mysq end ##########################
   redis:
 ################### redis 单机版 start ########################## 
-    host: 59.110.164.254
+    host: 127.0.0.1
     port: 6379    
     timeout: 6000
     database: 1

@@ -33,7 +33,7 @@ eureka:
     instance-info-replication-interval-seconds: 10
     registry-fetch-interval-seconds: 30  #从eureka服务端获取注册信息的间隔时间
     service-url:
-      defaultZone: http://ocp:ocp2019@127.0.0.1:1111/eureka
+      defaultZone: http://eureka1111.com:1111/eureka
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}

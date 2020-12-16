@@ -13,7 +13,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://ocp:ocp2019@127.0.0.1:1111/eureka/
+      defaultZone: http://eureka1111.com:1111/eureka/
       #http://192.168.3.170:1111/eureka,http://192.168.3.171:1111/eureka,http://192.168.3.173:1111/eureka
       #http://130.75.131.243:1111/eureka/,http://130.75.131.244:1111/eureka/,http://130.75.131.245:1111/eureka/  
     registry-fetch-interval-seconds: 5
